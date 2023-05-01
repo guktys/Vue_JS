@@ -1,0 +1,31 @@
+@import './base.css';
+
+
+
+
+body {
+  font-family: tahoma;
+  color: #282828;
+
+}
+
+
+button {
+
+  border: none;
+  background-color: #1E95EA;
+  color: white;
+  height: 40px;
+  width: 100px;
+  font-size: 14px;
+}
+
+
+
+@media (hover: hover) {
+  a:hover {
+    background-color: hsla(160, 100%, 37%, 0.2);
+  }
+}
+
+
