@@ -1,25 +1,31 @@
 <template>
-  <div class="app-wrap">
+  <div :class="typeof weather.city != 'undefined' && weather.list[0].main.temp < 0 ? 'cold' : ''">
+    <div class="app-wrap">
+      <i class="wi wi-day-sunny" v-if="weather.list && weather.list[0].weather[0].main === 'Clear'"></i>
+      <i class="wi wi-cloudy" v-if="weather.list && weather.list[0].weather[0].main === 'Clouds'"></i>
+      <i class="wi wi-rain" v-if="weather.list && weather.list[0].weather[0].main === 'Rain'"></i>
+      <i class="wi wi-snow" v-if="weather.list && weather.list[0].weather[0].main === 'Snow'"></i>
+      <div class="search-box">
 
-    <div class="search-box">
-
-      <input type="text" class="search-input" v-model="query" @keypress="fetchWeather" >
+        <input type="text" class="search-input" v-model="query" @keypress="fetchWeather" >
+      </div>
     </div>
-  </div>
-  <div class="info-wrap" v-if="typeof weather.city != 'undefined'">
+    <div class="info-wrap" v-if="typeof weather.city != 'undefined'">
 
-    <div class="info-box">
+      <div class="info-box">
 
-      <p class="date">{{ dateBuilder() }}</p>
+        <p class="date">{{ dateBuilder() }}</p>
 
-      <h3 class="location">{{ weather.city.name }}, {{ weather.city.country }}</h3>
+        <h3 class="location">{{ weather.city.name }}, {{ weather.city.country }}</h3>
 
-    </div>
+      </div>
 
-    <div class="weather-box">
+      <div class="weather-box">
 
-      <p class="temperature">{{ Math.round(weather.list[0].main.temp) }}°C</p>
-      <p class="details">{{ weather.list[0].weather[0].main }}</p>
+        <p class="temperature">{{ Math.round(weather.list[0].main.temp) }}°C</p>
+        <p class="details">{{ weather.list[0].weather[0].main }}</p>
+
+      </div>
 
     </div>
 
@@ -44,7 +50,7 @@ export default {
   },
   methods: {
     fetchWeather (e) {
-      if (e.key == "Enter") {
+      if (e.key === "Enter") {
         fetch(`${this.url_base}forecast?q=${this.query}&units=metric&APPID=${this.api_key}&cnt=5`) .then(res => { return res.json();  }).then(this.setResults); } },
     setResults (results) { this.weather = results;  },
     dateBuilder () { let date = moment().format('MMMM Do YYYY'); return date; }
