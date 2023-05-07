@@ -6,10 +6,26 @@
 body {
   font-family: tahoma;
   color: #282828;
-
+  font-size: larger;
+  background-image: url("pexels-rafael-cerqueira-4737484.jpg") ;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
+p.detail {
+  font-size: smaller;
+}
 
+input[type=text] {
+  border: 2px solid rgba(18, 72, 106, 0.15);
+  border-radius: 4px;
+  width: 93%;
+  padding-bottom: 13px;
+  box-sizing: content-box;
+  width: 297px;
+  margin: 10px;
+
+}
 button {
 
   border: none;
@@ -23,7 +39,23 @@ button {
   margin-bottom: auto;
 }
 
-
+.app-wrap{
+  border: 1px solid rgba(28,110,164,0.15);
+  border-radius: 18px;
+  background-color: #fffdfd;
+}
+.search-box {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+p.date {
+  display: flex;
+  justify-content: center;
+}
+.weather-box {
+  background-color: #dcf7f5;
+}
 @media (hover: hover) {
   a:hover {
     background-color: hsla(160, 100%, 37%, 0.2);

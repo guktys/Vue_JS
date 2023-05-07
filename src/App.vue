@@ -1,40 +1,48 @@
 <template>
   <div :class="typeof weather.city != 'undefined' && weather.list[0].main.temp < 0 ? 'cold' : ''">
-    <div class="app-wrap">
-      <i class="wi wi-day-sunny" v-if="weather.list && weather.list[0].weather[0].main === 'Clear'"></i>
-      <i class="wi wi-cloudy" v-if="weather.list && weather.list[0].weather[0].main === 'Clouds'"></i>
-      <i class="wi wi-rain" v-if="weather.list && weather.list[0].weather[0].main === 'Rain'"></i>
-      <i class="wi wi-snow" v-if="weather.list && weather.list[0].weather[0].main === 'Snow'"></i>
-      <div class="search-box">
+    <div class="main_box">
+      <div class="app-wrap">
+        <div class="search-box">
 
-        <input type="text" class="search-input" v-model="query" @keypress="fetchWeather">
+          <input type="text" class="search-input" v-model="query" @keypress="fetchWeather">
+        </div>
+        <i class="wi wi-day-sunny" v-if="weather.list && weather.list[0].weather[0].main === 'Clear'"></i>
+        <i class="wi wi-cloudy" v-if="weather.list && weather.list[0].weather[0].main === 'Clouds'"></i>
+        <i class="wi wi-rain" v-if="weather.list && weather.list[0].weather[0].main === 'Rain'"></i>
+        <i class="wi wi-snow" v-if="weather.list && weather.list[0].weather[0].main === 'Snow'"></i>
+        <div class="info-wrap" v-if="typeof weather.city != 'undefined'">
+
+          <div class="info-box">
+
+            <p class="date">{{ dateBuilder() }}</p>
+
+
+            <div class="weather-box" >
+              <h3 class="location">{{ weather.city.name }}, {{ weather.city.country }}</h3>
+              <p class="temperature">{{ Math.round(weather.list[0].main.temp) }}°C</p>
+              <p class="details">{{ weather.list[0].weather[0].main }}</p>
+
+            </div>
+
+          </div>
+
+
+          <div class="forecast-box">
+            <div v-for="(image, index) in forecastImages" :key="index" style="display: inline-block">
+              <p>{{ forecastDays[index] }}</p>
+
+              <p>{{ forecastWeather[index] }}°C</p>
+              <p><img :src="'http://openweathermap.org/img/w/' + image + '.png'"/></p>
+              <p class="detail">{{ forecastDetails[index] }}</p>
+            
+            </div>
+          </div>
+
+        </div>
       </div>
+
     </div>
-    <div class="info-wrap" v-if="typeof weather.city != 'undefined'">
 
-      <div class="info-box">
-
-        <p class="date">{{ dateBuilder() }}</p>
-
-        <h3 class="location">{{ weather.city.name }}, {{ weather.city.country }}</h3>
-
-      </div>
-
-      <div class="weather-box">
-
-        <p class="temperature">{{ Math.round(weather.list[0].main.temp) }}°C</p>
-        <p class="details">{{ weather.list[0].weather[0].main }}</p>
-
-      </div>
-      <div class="forecast-box">
-        <div v-for="(image, index) in forecastImages" :key="index"><p>{{ forecastDays[index] }}</p>
-
-          <p>{{ forecastWeather[index] }}°C</p>
-          <p><img :src="'http://openweathermap.org/img/w/' + image + '.png'"/></p>
-          <p>{{ forecastDetails[index] }}</p></div>
-      </div>
-
-    </div>
 
   </div>
 
@@ -42,14 +50,13 @@
 </template>
 
 <script>
-
 import moment from 'moment';
 
 export default {
   name: 'App',
   data() {
     return {
-      api_key: 'a7b1ce98f00fbcb2aa1e794fbf8e8cb4',
+      api_key: process.env.VUE_APP_API_KEY,
       url_base: 'https://api.openweathermap.org/data/2.5/',
       query: '',
       weather: {}
@@ -109,10 +116,16 @@ export default {
     } else {
       console.log("Your browser does not support geolocation API")
     }
-  },
+  }
 }
 
 </script>
-<style>
+<style >
 
+.main_box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
 </style>
